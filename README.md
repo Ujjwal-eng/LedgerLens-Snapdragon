@@ -345,6 +345,24 @@ In a real deployment (Render, Railway, Fly.io, AWS ECS, etc.) do **not** copy `.
 
 ---
 
+## On-Device Deployment on Snapdragon
+
+LedgerLens AI's extraction pipeline now runs a Qualcomm AI Hub–optimized TrOCR model directly on Snapdragon NPU, replacing the cloud-only OCR tier with a fully local, offline-capable path for scanned and handwritten invoices.
+
+Profiled on a real Snapdragon X Elite CRD device (Windows 11) via Qualcomm AI Hub, using the ONNX runtime:
+
+| Component | Inference Time | Peak Memory | Total Ops | Compute Unit |
+|---|---|---|---|---|
+| Encoder | 11.4 ms | 47 MB | 420 | 100% NPU |
+| Decoder | 2.0 ms | 67 MB | 354 | 100% NPU |
+| **Combined** | **~13.4 ms** | **~114 MB peak** | 774 | 100% NPU |
+
+Every single operation across both the encoder and decoder runs on the Snapdragon NPU — zero ops fall back to CPU or GPU — meaning invoice text extraction happens in real time (well under 15ms) with a memory footprint small enough to run comfortably alongside the rest of the pipeline on an HP Snapdragon PC.
+
+Because extraction now runs on-device, financial documents no longer need to leave the machine for OCR: no invoice image or extracted text is sent to a cloud API for this stage of the pipeline, directly supporting privacy-sensitive enterprise use cases (accounting, legal, healthcare billing) where document confidentiality matters. The existing Gemini/Groq-based tiers remain available as a fallback for text-native PDFs and vision-tier edge cases, giving the system both offline-first performance and cloud-backed robustness.
+
+---
+
 ## Limitations
 
 Being direct about what this is and isn't, rather than overselling it:

@@ -15,7 +15,8 @@ import pdfplumber
 from PIL import Image
 
 from core.schema import Invoice
-from tools.ocr_tool import ocr_extract
+# from tools.ocr_tool import ocr_extract
+from tools.trocr_engine import trocr_extract as ocr_extract
 from tools.llm_gateway import extract_with_fallback, ProviderError
 
 MIN_TEXT_CHARS = 40
@@ -119,7 +120,8 @@ def extract_invoice(path: str) -> Invoice:
 
     # TIER 2: OCR, if confident enough
     ocr_text, ocr_confidence = ocr_extract(image)
-    print(f"[info] OCR on {path}: {len(ocr_text)} chars, confidence {ocr_confidence:.1f}/100")
+    # print(f"[info] OCR on {path}: {len(ocr_text)} chars, confidence {ocr_confidence:.1f}/100")
+    print(f"[info] TrOCR (Qualcomm AI Hub, on-device) on {path}: {len(ocr_text)} chars, confidence {ocr_confidence:.1f}/100")
 
     if len(ocr_text) >= OCR_MIN_TEXT_CHARS and ocr_confidence >= OCR_MIN_CONFIDENCE:
         # image_bytes isn't passed here either — same reasoning as tier 1,

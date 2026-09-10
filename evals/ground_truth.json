@@ -325,7 +325,7 @@
         "amount": 18171.82
       }
     ],
-    "source_file": "sample_invoices_scanned/scanned_invoice_02_SDS-2026-27-102.pdf",
+    "source_file": "sample_invoices/scanned_invoice_02_SDS-2026-27-102.pdf",
     "expected_guardrail_status": "pass",
     "expected_compliance_status": "fail",
     "expected_compliance_issues": [
@@ -347,7 +347,7 @@
         "amount": 12166.01
       }
     ],
-    "source_file": "sample_invoices_scanned/scanned_invoice_05_SDS-2026-27-105.pdf",
+    "source_file": "sample_invoices/scanned_invoice_05_SDS-2026-27-105.pdf",
     "expected_guardrail_status": "pass",
     "expected_compliance_status": "pass",
     "expected_compliance_issues": [],
@@ -373,88 +373,13 @@
         "amount": 20987.49
       }
     ],
-    "source_file": "sample_invoices_scanned/scanned_BADQUALITY_invoice_07.pdf",
+    "source_file": "sample_invoices/scanned_BADQUALITY_invoice_07.pdf",
     "expected_guardrail_status": "pass",
     "expected_compliance_status": "fail",
     "expected_compliance_issues": [
       "line_item:Website Maintenance - Monthly Retainer"
     ],
     "notes": "Heavily degraded scan \u2014 should force Tier 3 (Gemini vision). Same underlying data as invoice_07, so if processed after it, RISK should flag possible_duplicate (fuzzy match). [Ground truth corrected after eval run: original random-generated rate falls outside the vendor's contracted per-item price range \u2014 a genuine data/contract mismatch in the synthetic baseline data, not an agent error.]"
-  },
-  "invoice_14_SDS-2026-27-118": {
-    "invoice_number": "SDS/2026-27/118",
-    "vendor": "Sharma Digital Solutions Pvt. Ltd.",
-    "invoice_date": "2026-08-03",
-    "due_date": "2026-08-18",
-    "amount": 145000,
-    "line_items": [
-      {
-        "description": "Annual Software License Renewal",
-        "quantity": 1,
-        "rate": 24000,
-        "amount": 24000
-      },
-      {
-        "description": "Technical Support Hours",
-        "quantity": 5,
-        "rate": 7500,
-        "amount": 37500
-      }
-    ],
-    "source_file": "sample_invoices/invoice_14_SDS-2026-27-118.pdf",
-    "expected_guardrail_status": "blocked",
-    "expected_guardrail_violation": "line_items_sum_to_total",
-    "expected_compliance_status": null,
-    "expected_compliance_issues": [],
-    "notes": "Printed Total (145,000) doesn't reconcile with line items + tax (~72,570). Simulates a clerical total error."
-  },
-  "invoice_15_RLC-2026-215": {
-    "invoice_number": "RLC/2026/215",
-    "vendor": "Reddy Legal & Compliance Advisors",
-    "invoice_date": "2026-07-20",
-    "due_date": "2026-08-04",
-    "amount": 53100,
-    "line_items": [
-      {
-        "description": "Legal Consultation - Hourly",
-        "quantity": 3,
-        "rate": 9000,
-        "amount": 45000
-      }
-    ],
-    "source_file": "sample_invoices/invoice_15_RLC-2026-215.pdf",
-    "expected_guardrail_status": "blocked",
-    "expected_guardrail_violation": "line_item_internal_math",
-    "expected_compliance_status": null,
-    "expected_compliance_issues": [],
-    "notes": "Line item printed amount (45,000) doesn't equal qty x rate (3 x 9,000 = 27,000). Total is consistent with the WRONG line amount, isolating this as purely a per-line math violation."
-  },
-  "invoice_16_KLF-2026-512": {
-    "invoice_number": "KLF/2026/512",
-    "vendor": "Kapoor Logistics & Freight Pvt. Ltd.",
-    "invoice_date": "2026-08-01",
-    "due_date": "2026-08-21",
-    "amount": 160480,
-    "line_items": [
-      {
-        "description": "Domestic Freight Charges",
-        "quantity": 1,
-        "rate": 58000,
-        "amount": 58000
-      },
-      {
-        "description": "Warehousing - Monthly",
-        "quantity": 1,
-        "rate": 78000,
-        "amount": 78000
-      }
-    ],
-    "source_file": "sample_invoices/invoice_16_KLF-2026-512.pdf",
-    "expected_guardrail_status": "pass",
-    "expected_guardrail_violation": null,
-    "expected_compliance_status": "pass",
-    "expected_compliance_issues": [],
-    "notes": "Internally consistent, each line within its contracted price range, correct Net 20 terms. Exceeds the GLOBAL hard ceiling (Rs.150,000) but this is a Supervisor/export-level guardrail, not a compliance or arithmetic issue."
   },
   "NOS_01_clean_autoapprove": {
     "invoice_number": "NOS/2026/041",

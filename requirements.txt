@@ -17,3 +17,6 @@ python-multipart
 mistralai
 pypdf
 pydantic[email]
+transformers[torch]
+sentencepiece
+protobuf
